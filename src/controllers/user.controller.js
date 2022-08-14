@@ -3,7 +3,7 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
-const User = require('../models/user.model')
+const User = require('../models/user.model');
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
@@ -39,11 +39,11 @@ const getTopMentors = catchAsync(async (req, res) => {
   const topMentor = await User.find({ userType: 'mentor' }, null, {
     limit: 10,
     sort: {
-      rating: -1
-    }
+      rating: -1,
+    },
   });
-  res.send(topMentor)
-})
+  res.send(topMentor);
+});
 
 const getMentorsInYourCity = catchAsync(async (req, res) => {
   const { city } = req.body;
@@ -59,9 +59,20 @@ const getMentorsInYourCity = catchAsync(async (req, res) => {
     });
   }
 
-  res.send(mentorsInYourCities)
-})
+  res.send(mentorsInYourCities);
+});
 
+const getMentors = async (req, res) => {
+  const { skip = 0, limit = 10 } = req.body;
+  const mentors = await User.find({ userType: 'mentor' }, null, { skip, limit });
+  res.send(mentors);
+};
+
+const getMentees = async (req, res) => {
+  const { skip = 0, limit = 10 } = req.body;
+  const mentees = await User.find({ userType: 'mentee' }, null, { skip, limit });
+  res.send(mentees);
+};
 
 module.exports = {
   createUser,
@@ -70,5 +81,7 @@ module.exports = {
   updateUser,
   deleteUser,
   getTopMentors,
-  getMentorsInYourCity
+  getMentorsInYourCity,
+  getMentors,
+  getMentees,
 };

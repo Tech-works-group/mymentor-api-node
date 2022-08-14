@@ -9,10 +9,13 @@ const router = express.Router();
 
 router.post('/addProfileInfo', auth(), validate(userValidation.addProfileInfo), authController.register);
 
-router.get('/getTopMentors', userController.getTopMentors)
+router.get('/getTopMentors', userController.getTopMentors);
 
-router.get('/getMentorsInYourCity', userController.getMentorsInYourCity)
+router.get('/getMentorsInYourCity', userController.getMentorsInYourCity);
 
+router.get('/getMentors', userController.getMentors);
+
+router.get('/getMentees', userController.getMentees);
 // router
 //   .route('/')
 //   .post(auth(), validate(userValidation.createUser), userController.createUser)
