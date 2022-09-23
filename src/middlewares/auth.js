@@ -21,14 +21,14 @@ const auth = () => async (req, res, next) => {
   //   .catch((err) => next(err));
 };
 
-async function Authenticate() {
+ function Authenticate() {
   return async function (req, res, next) {
     const jwtString = req.cookies.access;
-    const tokenDoc = await verifyToken(jwtString, 'access');
-    if (!tokenDoc) {
+    const user = await verifyToken(jwtString, 'access');
+    if (!user) {
       return res.status(HttpStatus.UNAUTHORIZED).send();
     }
-    req.user = tokenDoc.user;
+    req.user = user;
     next();
   };
 }

@@ -29,7 +29,7 @@ app.use(compression());
 
 app.use(cookieParser());
 // enable cors
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 // jwt authentication
 app.use(passport.initialize());
