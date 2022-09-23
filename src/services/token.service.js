@@ -53,7 +53,7 @@ const saveToken = async (token, userId, expires, type, blacklisted = false) => {
  */
 const verifyToken = async (token, type) => {
   const payload = jwt.verify(token, config.jwt.secret);
-  const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false });
+  const tokenDoc = await Token.findOne({ token, type, user: payload.sub, blacklisted: false }).populate('user');
   if (!tokenDoc) {
     throw new Error('Token not found');
   }
@@ -100,7 +100,6 @@ const generateResetPasswordToken = async (email) => {
   await saveToken(resetPasswordToken, user.id, expires, tokenTypes.RESET_PASSWORD);
   return resetPasswordToken;
 };
-
 
 module.exports = {
   generateToken,

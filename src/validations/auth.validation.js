@@ -5,10 +5,12 @@ const register = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
-    name: Joi.string().required(),
+    username: Joi.string().required(),
+    name: Joi.string(),
+    userType: Joi.string(),
+    date_of_birth: Joi.date(),
   }),
 };
-
 
 const login = {
   body: Joi.object().keys({
@@ -43,7 +45,6 @@ const resetPassword = {
     password: Joi.string().required().custom(password),
   }),
 };
-
 
 module.exports = {
   register,

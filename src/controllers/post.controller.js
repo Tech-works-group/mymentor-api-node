@@ -55,6 +55,7 @@ const createOpportunity = catchAsync(async (req, res) => {
 
 const createMentoringRequest = catchAsync(async (req, res) => {
   const { user } = req;
+  console.log(user);
   if (user.userType !== 'mentee') {
     res.status(httpStatus.FORBIDDEN).send('only mentees can create mentoring requests');
     return;
@@ -157,7 +158,7 @@ const getRecentMentoringRequests = async (req, res) => {
     },
     limit: 2,
   });
-
+  console.log(recent);
   res.send(recent);
 };
 

@@ -7,7 +7,7 @@ const authController = require('../../controllers/auth.controller');
 
 const router = express.Router();
 
-router.post('/addProfileInfo', auth(), validate(userValidation.addProfileInfo), authController.register);
+router.post('/addProfileInfo', auth(), validate(userValidation.addProfileInfo), userController.updateUser);
 
 router.get('/getTopMentors', userController.getTopMentors);
 

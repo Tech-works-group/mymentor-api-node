@@ -12,6 +12,20 @@ const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
+  /**
+   *
+   * Set Access Token
+   * expires in 5 minutes
+   * */
+  const tokenCookie = {
+    httpOnly: true,
+    secure: false,
+    path: '/',
+    expires: new Date(Date.now() + 10 * 60 * 1000),
+  };
+  res.status(202).cookie('access', tokens.access.token, tokenCookie);
+  res.status(202).cookie('refresh', tokens.refresh.token, tokenCookie);
+  res.status(202).cookie('cookettest', 'somecookie', tokenCookie);
   res.send({ user, tokens });
 });
 
@@ -35,7 +49,6 @@ const resetPassword = catchAsync(async (req, res) => {
   await authService.resetPassword(req.query.token, req.body.password);
   res.status(httpStatus.NO_CONTENT).send();
 });
-
 
 module.exports = {
   register,
