@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post('/addProfileInfo', auth(), validate(userValidation.addProfileInfo), userController.updateUser);
 
+router.get('/me', auth(), authController.me);
+
 router.get('/getTopMentors', userController.getTopMentors);
 
 router.get('/getMentorsInYourCity', userController.getMentorsInYourCity);

@@ -2,6 +2,10 @@ const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
 
+const me = catchAsync(async (req, res) => {
+  res.send(req.user);
+});
+
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
   const tokens = await tokenService.generateAuthTokens(user);
@@ -12,11 +16,7 @@ const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
-  /**
-   *
-   * Set Access Token
-   * expires in 5 minutes
-   * */
+
   const tokenCookie = {
     httpOnly: true,
     secure: false,
@@ -59,4 +59,5 @@ module.exports = {
   refreshTokens,
   forgotPassword,
   resetPassword,
+  me,
 };

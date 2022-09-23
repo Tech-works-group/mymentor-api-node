@@ -24,9 +24,12 @@ const auth = () => async (req, res, next) => {
  function Authenticate() {
   return async function (req, res, next) {
     const jwtString = req.cookies.access;
+    if (!jwtString) {
+      return res.status(401).send();
+    }
     const user = await verifyToken(jwtString, 'access');
     if (!user) {
-      return res.status(HttpStatus.UNAUTHORIZED).send();
+      return res.status(401).send();
     }
     req.user = user;
     next();
